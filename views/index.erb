@@ -1,12 +1,19 @@
 <div class="game_wrapper">
   <p>HANGMAN</p>
-  <h1><%= @word %></h1>
-  <h1><%= @hidden %></h1>
-  <h1>Guesses: <%= @guesses %></h1>
+  <h2><%= @word %></h2>
+  <h1><%= @hidden.upcase %></h1>
+  <h2>Guesses: <%= @guesses %></h2>
+  <h3>Wins/Losses <%= @wins %> / <%= @losses %></h3>
 
-  <form name="guess_form" action="/" method="post">
-      Guess:&nbsp;
-      <input type="text" name="guess" id="guess" size="5" value=""/>
-      <button formmethod="post">Guess!</button>
-    </form>
+  <form action="/" method="post">
+    <% ('A'..'Z').each do |l| %>
+      <% if @letters.include?(l.downcase) %>
+        <button class="picked" formmethod="post" name="guess" value="<%= l %>" disabled>
+        <%= l %></button>
+      <% else %>
+        <button class="unpicked" formmethod="post" name="guess" value="<%= l %>">
+        <%= l %></button>
+      <% end %>
+    <% end %>
+  </form>
 </div>

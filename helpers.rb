@@ -15,15 +15,20 @@ end
 
 def find_game(id)
   redis = get_connection
-  game = JSON.parse(redis.get(id), symbolize_names: true)
+  game_check = redis.get(id)
+  if game_check.nil?
+    return nil
+  end
+  game = JSON.parse(game_check, symbolize_names: true)
   redis.quit
   game
 end
 
-def save_game(id, word, hidden, guesses, wins, losses)
+def save_game(id, word, hidden, letters, guesses, wins, losses)
   redis = get_connection
   redis.setex(id, 3600, { word: word,
                           hidden: hidden,
+                          letters: letters,
                           guesses: guesses,
                           wins: wins,
                           losses: losses }.to_json)

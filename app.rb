@@ -9,32 +9,57 @@ require 'pry'
 get '/' do
   @word = RandomWordGenerator.of_length(rand(6)+7)
   @hidden = "_" * @word.length
-  save_game(session.id, @word, @hidden, 0, 0, 0)
+  @letters = ""
+  @guesses = 0
+
+  game = find_game(session.id)
+  if game.nil?
+    @wins = 0
+    @losses = 0
+  else
+    @wins = game[:wins]
+    @losses = game[:losses]
+  end
+
+  save_game(session.id, @word, @hidden, @letters, @guesses, @wins, @losses)
 
   erb :index
 end
 
 post '/' do
   game = find_game(session.id)
-  @word = game[:word]
+  guess = params[:guess].downcase
 
-  if @word.include?(params[:guess])
-    @hidden = check_letter(@word, game[:hidden], params[:guess])
+  if game.nil? || !('a'..'z').include?(guess)
+    redirect '/'
+  end
+
+  @word = game[:word]
+  @letters = game[:letters] + guess
+  @wins = game[:wins]
+  @losses = game[:losses]
+
+  if @word.include?(guess)
+    @hidden = check_letter(@word, game[:hidden], guess)
     @guesses = game[:guesses]
   else
     @hidden = game[:hidden]
-    @guesses = game[:guesses] += 1
+    @guesses = game[:guesses] + 1
   end
 
   if @hidden == @word
-    #win
+    @wins += 1
+    save_game(session.id, @word, @hidden, "", 0, @wins, @losses)
+    redirect '/'
   end
 
   if @guesses >= 10
-    #lose
+    @losses += 1
+    save_game(session.id, @word, @hidden, "", 0, @wins, @losses)
+    redirect '/'
   end
-
-  save_game(session.id, @word, @hidden, @guesses, 0, 0)
+  # binding.pry
+  save_game(session.id, @word, @hidden, @letters, @guesses, @wins, @losses)
 
   erb :index
 end
