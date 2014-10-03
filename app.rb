@@ -6,6 +6,9 @@ enable :sessions
 
 get '/' do
   @word = [Faker::Hacker.noun, Faker::Hacker.verb].sample
+  while @word.include?("_")
+    @word = [Faker::Hacker.noun, Faker::Hacker.verb].sample
+  end
   @hidden = "_" * @word.length
   @letters = ""
   @guesses = 0
