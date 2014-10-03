@@ -4,4 +4,4 @@ ruby '2.0.0'
 
 gem 'sinatra'
 gem 'redis'
-gem 'random_word_generator'
+gem 'random-word-generator'

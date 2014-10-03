@@ -26,7 +26,7 @@ end
 
 def save_game(id, word, hidden, letters, guesses, wins, losses)
   redis = get_connection
-  redis.setex(id, { word: word,
+  redis.set(id, { word: word,
                           hidden: hidden,
                           letters: letters,
                           guesses: guesses,

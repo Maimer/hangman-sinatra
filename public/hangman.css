@@ -8,15 +8,29 @@
 h1 {
   font-size: 42px;
   letter-spacing: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 form {
   display: inline-block;
 }
 
+.hidden {
+  font-size: 42px;
+  font-weight: bold;
+  letter-spacing: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.letter {
+  width: 50px;
+}
+
 .picked {
   margin: 3px;
-  width: 50px;
   border-top: 2px solid #8A8A8A;
   border-left: 2px solid #8A8A8A;
   border-right: 2px solid #8A8A8A;
@@ -31,7 +45,6 @@ form {
 
 .unpicked {
   margin: 3px;
-  width: 50px;
   border-top: 2px solid #FFCC33;
   border-left: 2px solid #FFCC33;
   border-right: 2px solid #FF9900;
@@ -45,25 +58,6 @@ form {
 }
 
 .unpicked:hover {
-  background-color: #334BFF;
-  text-shadow: 2px 2px #000000;
-}
-
-.nextgame {
-  margin: 3px;
-  border-top: 2px solid #FFCC33;
-  border-left: 2px solid #FFCC33;
-  border-right: 2px solid #FF9900;
-  border-bottom: 2px solid #FF9900;
-  padding: 8px 16px !important;
-  font-size: 14px !important;
-  background-color: #0030CC;
-  font-weight: bold;
-  color: #FFFFFF;
-  text-align: center;
-}
-
-.nextgame:hover {
   background-color: #334BFF;
   text-shadow: 2px 2px #000000;
 }

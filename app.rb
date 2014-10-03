@@ -4,8 +4,6 @@ require_relative 'helpers'
 
 enable :sessions
 
-require 'pry'
-
 get '/' do
   @word = RandomWordGenerator.of_length(rand(6)+7)
   @hidden = "_" * @word.length
@@ -55,14 +53,14 @@ post '/' do
   if @hidden == @word
     @wins += 1
     save_game(session.id, @word, @hidden, "", 0, @wins, @losses)
-    @nextgame = true
+    @nextgame = "You Won!"
   end
 
   if @guesses >= 10
     @losses += 1
     @hidden = @word
     save_game(session.id, @word, @hidden, "", 0, @wins, @losses)
-    @nextgame = true
+    @nextgame = "You Lost!"
   end
 
   save_game(session.id, @word, @hidden, @letters, @guesses, @wins, @losses)

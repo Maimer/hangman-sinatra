@@ -1,24 +1,24 @@
 <div class="game_wrapper">
   <h1>HANGMAN</h1>
-  <h2><%= @word %></h2>
-  <h1><%= @hidden.upcase %></h1>
-  <h2>Guesses: <%= @guesses %></h2>
+  <img src="images/hangman<%= @guesses %>.png" width='220'>
+  <p class="hidden"><%= @hidden.upcase %></p>
   <h3>Wins/Losses: <%= @wins %> / <%= @losses %></h3>
 
   <form action="/" method="post">
     <% if @nextgame %>
-      <button class="nextgame" formmethod="post" name="action" value="next">
-        Next Game!</button>
+      <button class="unpicked" formmethod="post" name="action" value="next">
+        <%= @nextgame %></button>
     <% else %>
       <% ('A'..'Z').each do |l| %>
         <% if @letters.include?(l.downcase) %>
-          <button class="picked" formmethod="post" name="guess" value="<%= l %>" disabled>
+          <button class="picked letter" formmethod="post" name="guess" value="<%= l %>" disabled>
           <%= l %></button>
         <% else %>
-          <button class="unpicked" formmethod="post" name="guess" value="<%= l %>">
+          <button class="unpicked letter" formmethod="post" name="guess" value="<%= l %>">
           <%= l %></button>
         <% end %>
       <% end %>
     <% end %>
   </form>
+  <br>
 </div>
