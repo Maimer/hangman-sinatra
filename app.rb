@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'random_word_generator'
 require 'faker'
 require_relative 'helpers'
 
