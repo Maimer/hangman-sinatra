@@ -27,6 +27,10 @@ get '/' do
 end
 
 post '/' do
+  if params[:action] == "next"
+    redirect '/'
+  end
+
   game = find_game(session.id)
   guess = params[:guess].downcase
 
@@ -34,6 +38,7 @@ post '/' do
     redirect '/'
   end
 
+  @nextgame = false
   @word = game[:word]
   @letters = game[:letters] + guess
   @wins = game[:wins]
@@ -50,15 +55,16 @@ post '/' do
   if @hidden == @word
     @wins += 1
     save_game(session.id, @word, @hidden, "", 0, @wins, @losses)
-    redirect '/'
+    @nextgame = true
   end
 
   if @guesses >= 10
     @losses += 1
+    @hidden = @word
     save_game(session.id, @word, @hidden, "", 0, @wins, @losses)
-    redirect '/'
+    @nextgame = true
   end
-  # binding.pry
+
   save_game(session.id, @word, @hidden, @letters, @guesses, @wins, @losses)
 
   erb :index
