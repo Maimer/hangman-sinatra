@@ -1,11 +1,12 @@
 require 'sinatra'
 require 'random_word_generator'
+require 'faker'
 require_relative 'helpers'
 
 enable :sessions
 
 get '/' do
-  @word = RandomWordGenerator.of_length(rand(6)+7)
+  @word = [Faker::Hacker.noun, Faker::Hacker.verb].sample
   @hidden = "_" * @word.length
   @letters = ""
   @guesses = 0
