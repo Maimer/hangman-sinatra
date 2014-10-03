@@ -20,8 +20,21 @@ def find_game(id)
   game
 end
 
-def save_game(id, word, wins, losses)
+def save_game(id, word, hidden, guesses, wins, losses)
   redis = get_connection
-  redis.setex(id, 3600, { word: word, wins: wins, losses: losses, created: Time.now }.to_json)
+  redis.setex(id, 3600, { word: word,
+                          hidden: hidden,
+                          guesses: guesses,
+                          wins: wins,
+                          losses: losses }.to_json)
   redis.quit
+end
+
+def check_letter(word, hidden, letter)
+  word.length.times do |num|
+    if word[num] == letter
+      hidden[num] = letter
+    end
+  end
+  hidden
 end
