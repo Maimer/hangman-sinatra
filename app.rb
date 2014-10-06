@@ -94,7 +94,6 @@ post '/' do
       @wins += 1
       @letters += guess
     end
-    save_game(session.id, @word, @hidden, @letters, @guesses, @wins, @losses)
     @next_game = true
     @button_text = "You Won!"
   #checks to see if the player had too many missed guesses and updates losses
@@ -105,13 +104,13 @@ post '/' do
       @letters += guess
     end
     @hidden = @word
-    save_game(session.id, @word, @hidden, @letters, @guesses, @wins, @losses)
     @next_game = true
     @button_text = "You Lost!"
   else
     @letters += guess
-    save_game(session.id, @word, @hidden, @letters, @guesses, @wins, @losses)
   end
+
+  save_game(session.id, @word, @hidden, @letters, @guesses, @wins, @losses)
 
   erb :index
 end
