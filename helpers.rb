@@ -27,11 +27,11 @@ end
 def save_game(id, word, hidden, letters, guesses, wins, losses)
   redis = get_connection
   redis.set(id, { word: word,
-                          hidden: hidden,
-                          letters: letters,
-                          guesses: guesses,
-                          wins: wins,
-                          losses: losses }.to_json)
+                  hidden: hidden,
+                  letters: letters,
+                  guesses: guesses,
+                  wins: wins,
+                  losses: losses }.to_json)
   redis.quit
 end
 

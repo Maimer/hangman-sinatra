@@ -5,10 +5,13 @@
   <h3>Wins/Losses: <%= @wins %> / <%= @losses %></h3>
 
   <form action="/" method="post">
-    <% if @nextgame %>
+    <% if @next_game %>
       <button class="unpicked" formmethod="post" name="action" value="next">
-        <%= @nextgame %></button>
+        <%= @button_text %></button>
     <% else %>
+        <input class="text-input" type="text" name="guess" size="15" value=""/>
+        <button class="unpicked guess" formmethod="post">Guess!</button>
+      <br>
       <% ('A'..'Z').each do |l| %>
         <% if @letters.include?(l.downcase) %>
           <button class="picked letter" formmethod="post" name="guess" value="<%= l %>" disabled>
